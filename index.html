@@ -466,12 +466,9 @@ section#apoyo { padding-top: 31px; padding-bottom: 36px; }
 #apoyo .hours-panel small { margin-top:9px; line-height:1.55; }
 section#preguntas { padding-top: 34px; }
 
-/* A subtle one-time rise/fade as each heading comes into view. */
-@keyframes cofamedTitleEnter {
- from { opacity:.5; transform:translateY(11px); }
- to { opacity:1; transform:translateY(0); }
-}
-h1.title-enter, h2.title-enter { animation:cofamedTitleEnter 600ms cubic-bezier(.2,.7,.2,1) both; }
+
+
+
 
 @media (min-width: 981px) {
  .hero { min-height: calc(100svh - 160px); display:flex; align-items:center; }
@@ -534,7 +531,7 @@ h1.title-enter, h2.title-enter { animation:cofamedTitleEnter 600ms cubic-bezier(
  #apoyo .support-panel, #apoyo .hours-panel { padding: 20px 18px; }
 }
 @media (prefers-reduced-motion:reduce) {
- h1.title-enter, h2.title-enter { animation:none !important; }
+ 
 }
 
 
@@ -550,15 +547,9 @@ h1.title-enter, h2.title-enter { animation:cofamedTitleEnter 600ms cubic-bezier(
 section#apoyo { padding-bottom: 52px; }
 section#preguntas { padding-top: 42px; }
 
-/* Animación deliberadamente visible, pero breve y sobria. */
-@keyframes cofamedTitleEnter {
-  0% { opacity: 0; transform: translate3d(0, 22px, 0); filter: blur(2px); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
-}
-main h1.title-enter, main h2.title-enter {
-  animation: cofamedTitleEnter 960ms cubic-bezier(.22, 1, .36, 1) both;
-  will-change: transform, opacity;
-}
+
+
+
 @media (max-width: 980px) {
   .brand-inner { min-height: 82px; }
   .brand-crests { height: 68px; }
@@ -571,7 +562,7 @@ main h1.title-enter, main h2.title-enter {
   .brand-cofamed { width: 177px; }
   section#apoyo { padding-bottom: 36px; }
   section#preguntas { padding-top: 36px; }
-  main h1.title-enter, main h2.title-enter { animation-duration: 800ms; }
+  
 }
 @media (max-width: 390px) {
   .brand-inner { min-height: 64px; }
@@ -579,7 +570,7 @@ main h1.title-enter, main h2.title-enter {
   .brand-cofamed { width: 156px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  main h1.title-enter, main h2.title-enter { animation: none !important; will-change: auto; }
+  
 }
 
 
@@ -858,22 +849,10 @@ section#apoyo { padding-top:67px; }
   .site-header .nav-links a { transition:none; }
 }
 
-/* V9 | Subtle title animation on GitHub Pages, no iframe.
-   H1 animates on load; H2 only animates when entering the viewport.
-   No content is hidden if JavaScript is unavailable. */
-@keyframes cofamedHeadingReveal {
-  from { opacity: .14; transform: translate3d(0, 20px, 0); filter: blur(2px); }
-  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  main h1 { animation: cofamedHeadingReveal .94s cubic-bezier(.22, 1, .36, 1) .10s both; }
-  main h2.cofamed-heading-visible {
-    animation: cofamedHeadingReveal .82s cubic-bezier(.22, 1, .36, 1) both;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  main h1, main h2.cofamed-heading-visible { animation: none !important; }
-}
+
+
+
+
 
 /* V10 — Portada móvil de una pantalla y recursos más ligeros.
    100svh considera la barra visible de Safari y evita que asome la sección siguiente.
@@ -897,9 +876,7 @@ section#apoyo { padding-top:67px; }
   .hero-actions .button { min-height: 52px; }
   .hero-micro { margin-top: 22px; gap: 9px 15px; }
   .hero-micro span { font-size: .73rem; }
-  /* Menos repintado que una animación con filtro de desenfoque. */
-  main h1 { animation: cofamedHeadingMobile .48s cubic-bezier(.22,1,.36,1) both; }
-  main h2.cofamed-heading-visible { animation: cofamedHeadingMobile .48s cubic-bezier(.22,1,.36,1) both; }
+  
 }
 @media (max-width: 380px) {
   :root { --cf-header-height: 69px; }
@@ -921,12 +898,87 @@ section#apoyo { padding-top:67px; }
   .hero-actions .button { min-height: 47px; }
   .hero-micro { margin-top: 14px; }
 }
-@keyframes cofamedHeadingMobile {
-  from { opacity: .7; transform: translate3d(0, 8px, 0); }
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
+
+/* V11 | Portada móvil: tres niveles visuales, sin animaciones de encabezados.
+   La sección cubre el alto visible bajo la barra institucional y crece sin cortar
+   contenido en pantallas bajas, al ampliar texto o al usar zoom. */
+@media (max-width:700px) {
+  .hero {
+    --hero-top: clamp(29px, 4svh, 45px);
+    --hero-bottom: clamp(30px, 4.5svh, 46px);
+    min-height: calc(100svh - var(--cf-header-height, 74px));
+    padding: var(--hero-top) 0 var(--hero-bottom);
+    display: flex;
+    align-items: center;
+  }
+  .hero-grid {
+    width: calc(100% - 44px);
+    max-width: 700px;
+    margin-inline: auto;
+  }
+  .hero-grid > .hero-copy {
+    width: 100%;
+    max-width: none;
+    min-height: calc(100svh - var(--cf-header-height, 74px) - var(--hero-top) - var(--hero-bottom));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(18px, 3svh, 42px);
+  }
+  .hero-intro, .hero-description, .hero-cta-group { flex: none; }
+  .hero-kicker { margin: 0 0 20px; font-size: .71rem; padding: 8px 13px; }
+  .hero h1 {
+    font-size: clamp(2.3rem, 9.2vw, 2.87rem);
+    line-height: 1.12;
+    letter-spacing: -.04em;
+    margin: 0 0 16px;
+  }
+  .hero .hero-subhead {
+    font-size: clamp(.99rem, 4vw, 1.1rem);
+    line-height: 1.42;
+    margin: 0;
+  }
+  .hero-description { display: grid; gap: 12px; }
+  .hero-description p.lead {
+    margin: 0;
+    font-size: clamp(.9rem, 3.68vw, .98rem);
+    line-height: 1.58;
+    max-width: 46ch;
+  }
+  .hero-cta-group { display: grid; gap: 18px; }
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 0;
+  }
+  .hero-actions .button { min-height: 53px; width: 100%; }
+  .hero-micro {
+    justify-content: center;
+    gap: 12px 18px;
+    margin: 0;
+  }
+  .hero-micro span { font-size: .74rem; }
 }
-@media (prefers-reduced-motion: reduce) {
-  main h1, main h2.cofamed-heading-visible { animation: none !important; }
+/* En pantallas angostas y/o bajas, conservar botones cómodos y jerarquía legible. */
+@media (max-width:380px) {
+  .hero-grid { width: calc(100% - 34px); }
+  .hero-kicker { margin-bottom: 15px; }
+  .hero h1 { font-size: clamp(2.12rem, 9.2vw, 2.5rem); margin-bottom: 12px; }
+  .hero-description { gap: 9px; }
+  .hero-cta-group { gap: 13px; }
+  .hero-actions { gap: 9px; }
+}
+@media (max-width:700px) and (max-height:720px) {
+  .hero { --hero-top: 22px; --hero-bottom: 25px; }
+  .hero-grid > .hero-copy { gap: 16px; }
+  .hero-kicker { margin-bottom: 12px; }
+  .hero h1 { margin-bottom: 10px; }
+  .hero-description { gap: 9px; }
+  .hero-description p.lead { line-height: 1.5; }
+  .hero-cta-group { gap: 12px; }
+  .hero-actions { gap: 9px; }
+  .hero-actions .button { min-height: 49px; }
 }
 </style>
 </head>
@@ -962,13 +1014,19 @@ section#apoyo { padding-top:67px; }
 </picture></div>
 <div class="container hero-grid">
  <div class="hero-copy">
+  <div class="hero-intro">
   <span class="hero-kicker"><span class="spark" aria-hidden="true">✦</span> En COFAMED tu voz importa</span>
   <h1 id="heroHeading">Tu formación merece <span>respeto.</span></h1>
   <p class="hero-subhead">Aprender no debería significar soportar maltrato.</p>
+  </div>
+  <div class="hero-description">
   <p class="lead">¿Te han humillado, insultado o amenazado durante una clase o práctica? ¿Tienes miedo de hablar porque podría afectar tus notas?</p>
   <p class="lead">En COFAMED queremos ayudarte a reconocer estas situaciones y saber qué hacer si las estás viviendo.</p>
+  </div>
+  <div class="hero-cta-group">
   <div class="hero-actions"><a class="button report-cta" href="https://forms.gle/ujz1rMGKt5jMNPU48" target="_blank" rel="noopener noreferrer" >Reportar maltrato <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a class="button secondary" href="#comprender">Conoce las señales</a></div>
   <div class="hero-micro" aria-label="Objetivos de la iniciativa"><span>Reconoce</span><span>Reporta</span><span>Busca apoyo</span></div>
+  </div>
  </div>
 </div>
 </section>
@@ -1157,23 +1215,6 @@ section#apoyo { padding-top:67px; }
 </script>
 
 
-<script>
-/* V9 | H2 animated only when first entering the viewport (GitHub Pages). */
-(() => {
-  'use strict';
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!('IntersectionObserver' in window)) return;
-  const headings = [...document.querySelectorAll('main h2')];
-  const observer = new IntersectionObserver((entries, obs) => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      entry.target.classList.add('cofamed-heading-visible');
-      obs.unobserve(entry.target);
-    }
-  }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
-  headings.forEach(el => observer.observe(el));
-})();
-</script>
 
 </body>
 </html>
